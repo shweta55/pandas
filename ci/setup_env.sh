@@ -1,5 +1,13 @@
 #!/bin/bash -e
 
+echo "/usr/bin: "
+ls /usr/bin
+echo "/usr/lib: "
+ls /usr/lib
+echo "/usr/local/lib: "
+ls /usr/local/lib
+echo "/usr/local/bin/python: "
+ls /usr/local/bin/python
 # edit the locale file if needed
 if [ -n "$LOCALE_OVERRIDE" ]; then
     echo "Adding locale to the first line of pandas/__init__.py"
