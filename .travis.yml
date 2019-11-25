@@ -31,14 +31,6 @@ matrix:
       - python: 3.5
 
     include:
-    - dist: bionic
-      sudo: true
-      os: linux
-      arch: arm64
-      # 18.04
-      python: 3.8.0
-      env:
-        - JOB="3.8-dev" PATTERN="(not slow and not network)"
         
     - dist: bionic
       os: linux
