@@ -12,8 +12,12 @@ if [ -n "$LOCALE_OVERRIDE" ]; then
     sudo locale-gen "$LOCALE_OVERRIDE"
 fi
 
-MINICONDA_DIR="$HOME/miniconda3"
-
+UNAME_ARCH=$(uname -m)
+if [ "$UNAME_ARCH" == 'aarch64' ]; then
+   MINICONDA_DIR="$HOME/archiconda3"
+else
+   MINICONDA_DIR="$HOME/miniconda3"
+fi
 
 if [ -d "$MINICONDA_DIR" ]; then
     echo
@@ -36,9 +40,22 @@ else
   exit 1
 fi
 
-wget -q "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh" -O miniconda.sh
-chmod +x miniconda.sh
-./miniconda.sh -b
+echo "who am i"
+whoami
+
+if [ "$UNAME_ARCH" == 'aarch64' ]; then
+   wget -q "https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh" -O archiconda.sh
+   chmod +x archiconda.sh
+   ./archiconda.sh -b
+   echo "chmod MINICONDA_DIR"
+   sudo chmod -R 777 $MINICONDA_DIR
+   sudo cp $MINICONDA_DIR/bin/* /usr/bin/
+   sudo rm /usr/bin/lsb_release
+else
+   wget -q "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh" -O miniconda.sh
+   chmod +x miniconda.sh
+   ./miniconda.sh -b
+fi
 
 export PATH=$MINICONDA_DIR/bin:$PATH
 
@@ -50,8 +67,8 @@ echo
 echo "update conda"
 conda config --set ssl_verify false
 conda config --set quiet true --set always_yes true --set changeps1 false
-conda install pip  # create conda to create a historical artifact for pip & setuptools
-conda update -n base conda
+sudo conda install pip  # create conda to create a historical artifact for pip & setuptools
+sudo conda update -n base conda
 
 echo "conda info -a"
 conda info -a
@@ -92,7 +109,7 @@ conda remove --all -q -y -n pandas-dev
 
 echo
 echo "conda env create -q --file=${ENV_FILE}"
-time conda env create -q --file="${ENV_FILE}"
+time sudo conda env create -q --file="${ENV_FILE}"
 
 
 if [[ "$BITS32" == "yes" ]]; then
@@ -106,13 +123,13 @@ source activate pandas-dev
 echo
 echo "remove any installed pandas package"
 echo "w/o removing anything else"
-conda remove pandas -y --force || true
-pip uninstall -y pandas || true
+sudo conda remove pandas -y --force || true
+sudo pip uninstall -y pandas || true
 
 echo
 echo "remove postgres if has been installed with conda"
 echo "we use the one from the CI"
-conda remove postgresql -y --force || true
+sudo conda remove postgresql -y --force || true
 
 echo
 echo "conda list pandas"
@@ -130,10 +147,10 @@ python setup.py build_ext -q -i
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
-python -m pip install --no-deps -U pip wheel setuptools
+sudo python3.6 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
-python -m pip install --no-build-isolation -e .
+sudo python -m pip install --no-build-isolation -e .
 
 echo
 echo "conda list"

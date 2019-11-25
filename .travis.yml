@@ -1,3 +1,4 @@
+sudo: required
 language: python
 python: 3.5
 
@@ -29,25 +30,25 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
 
-    include:
+    include: 
     - dist: trusty
+      os: linux
+      sudo: true
+      arch: arm64    
       env:
-        - JOB="3.8" ENV_FILE="ci/deps/travis-38.yaml" PATTERN="(not slow and not network)"
-
-    - dist: trusty
-      env:
-        - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network)"
-
-    - dist: trusty
-      env:
-        - JOB="3.6, locale" ENV_FILE="ci/deps/travis-36-locale.yaml" PATTERN="((not slow and not network) or (single and db))" LOCALE_OVERRIDE="zh_CN.UTF-8"
-
-    - dist: trusty
-      env:
-        - JOB="3.6, coverage" ENV_FILE="ci/deps/travis-36-cov.yaml" PATTERN="((not slow and not network) or (single and db))" PANDAS_TESTING_MODE="deprecate" COVERAGE=true
+        - JOB="3.7" ENV_FILE="ci/deps/travis-37-aarch64.yaml" PATTERN="(not slow and not network)"
 
     # In allow_failures
     - dist: trusty
+      os: linux
+      arch: amd64    
+      env:
+        - JOB="3.6, slow" ENV_FILE="ci/deps/travis-36-slow.yaml" PATTERN="slow"
+
+    - dist: trusty
+      os: linux
+      sudo: true
+      arch: arm64    
       env:
         - JOB="3.6, slow" ENV_FILE="ci/deps/travis-36-slow.yaml" PATTERN="slow"
 
@@ -86,7 +87,7 @@ install:
 script:
   - echo "script start"
   - echo "$JOB"
-  - source activate pandas-dev
+  - if [ "$JOB" != "3.8-dev" ]; then source activate pandas-dev; fi
   - ci/run_tests.sh
 
 after_script:
