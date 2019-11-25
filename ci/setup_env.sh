@@ -48,6 +48,7 @@ if [ "$UNAME_ARCH" == 'aarch64' ]; then
    chmod +x archiconda.sh
    sudo apt-get install python3-dev
    sudo apt-get install python-dev
+   sudo apt-get install libpython3.7-dev
     echo "/usr/local/bin/: "
     sudo ls /usr/local/bin/
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
