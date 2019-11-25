@@ -30,25 +30,47 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
 
-    include: 
+    include:
+    - dist: bionic
+      sudo: true
+      os: linux
+      arch: arm64
+      # 18.04
+      python: 3.8.0
+      env:
+        - JOB="3.8-dev" PATTERN="(not slow and not network)"
+        
+    - dist: bionic
+      os: linux
+      arch: amd64
+      # 18.04
+      python: 3.8.0
+      env:
+        - JOB="3.8-dev" PATTERN="(not slow and not network)"        
+
     - dist: trusty
       os: linux
       sudo: true
       arch: arm64    
       env:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37-aarch64.yaml" PATTERN="(not slow and not network)"
+        
+    - dist: trusty
+      os: linux
+      arch: amd64    
+      env:
+        - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network)"        
+        
+    - dist: trusty
+      os: linux
+      arch: amd64    
+      env:
+        - JOB="3.6, locale" ENV_FILE="ci/deps/travis-36-locale.yaml" PATTERN="((not slow and not network) or (single and db))" LOCALE_OVERRIDE="zh_CN.UTF-8"
 
     # In allow_failures
     - dist: trusty
       os: linux
       arch: amd64    
-      env:
-        - JOB="3.6, slow" ENV_FILE="ci/deps/travis-36-slow.yaml" PATTERN="slow"
-
-    - dist: trusty
-      os: linux
-      sudo: true
-      arch: arm64    
       env:
         - JOB="3.6, slow" ENV_FILE="ci/deps/travis-36-slow.yaml" PATTERN="slow"
 
