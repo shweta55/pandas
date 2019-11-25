@@ -46,7 +46,6 @@ whoami
 if [ "$UNAME_ARCH" == 'aarch64' ]; then
    wget -q "https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh" -O archiconda.sh
    chmod +x archiconda.sh
-   sudo apt-get install python3-dev
    sudo apt-get install python-dev
    sudo apt-get install libpython3.7-dev
     echo "/usr/local/bin/: "
@@ -130,7 +129,7 @@ echo
 echo "remove any installed pandas package"
 echo "w/o removing anything else"
 sudo conda remove pandas -y --force || true
-sudo pip uninstall -y pandas || true
+sudo python3.7 -m pip uninstall -y pandas || true
 
 echo
 echo "remove postgres if has been installed with conda"
@@ -153,10 +152,10 @@ python setup.py build_ext -q -i
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
-sudo python3.6 -m pip install --no-deps -U pip wheel setuptools
+sudo python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
-sudo python -m pip install --no-build-isolation -e .
+sudo python3.7 -m pip install --no-build-isolation -e .
 
 echo
 echo "conda list"
