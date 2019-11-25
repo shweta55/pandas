@@ -47,6 +47,7 @@ if [ "$UNAME_ARCH" == 'aarch64' ]; then
    wget -q "https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh" -O archiconda.sh
    chmod +x archiconda.sh
    sudo apt-get install python-dev
+   sudo apt-get install python3-pip
    sudo apt-get install libpython3.7-dev
     echo "/usr/local/bin/: "
     sudo ls /usr/local/bin/
