@@ -1,13 +1,5 @@
 #!/bin/bash -e
 
-echo "/usr/bin: "
-ls /usr/bin
-echo "/usr/lib: "
-ls /usr/lib
-echo "/usr/local/lib: "
-ls /usr/local/lib
-echo "/usr/local/bin/python: "
-ls /usr/local/bin/python
 # edit the locale file if needed
 if [ -n "$LOCALE_OVERRIDE" ]; then
     echo "Adding locale to the first line of pandas/__init__.py"
@@ -56,6 +48,14 @@ if [ "$UNAME_ARCH" == 'aarch64' ]; then
    chmod +x archiconda.sh
    sudo apt-get install python3-dev
    sudo apt-get install python-dev
+    echo "/usr/bin: "
+    sudo ls /usr/bin
+    echo "/usr/lib: "
+    sudo ls /usr/lib
+    echo "/usr/local/lib: "
+    sudo ls /usr/local/lib
+    echo "/usr/local/bin/python: "
+    sudo ls /usr/local/bin/python   
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
    ./archiconda.sh -b
    echo "chmod MINICONDA_DIR"
