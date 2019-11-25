@@ -48,7 +48,7 @@ if [ "$UNAME_ARCH" == 'aarch64' ]; then
    chmod +x archiconda.sh
    sudo apt-get install python3-dev
    sudo apt-get install python-dev
-   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/usr/local/bin/python
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
    ./archiconda.sh -b
    echo "chmod MINICONDA_DIR"
    sudo chmod -R 777 $MINICONDA_DIR
