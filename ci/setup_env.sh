@@ -171,6 +171,8 @@ conda list
 # Install DB for Linux
 #if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
  # echo "installing dbs"
+ # sudo systemctl start mysql
+ # sudo service postgresql start 
  # mysql -e 'create database pandas_nosetest;'
  # psql -c 'create database pandas_nosetest;' -U postgres
 #else
