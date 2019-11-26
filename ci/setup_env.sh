@@ -136,7 +136,7 @@ sudo python3.7 -m pip uninstall -y pandas || true
 echo
 echo "remove postgres if has been installed with conda"
 echo "we use the one from the CI"
-sudo conda remove postgresql -y --force || true
+#sudo conda remove postgresql -y --force || true
 
 echo
 echo "conda list pandas"
