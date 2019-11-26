@@ -1,5 +1,5 @@
 #!/bin/bash -e
-
+whoami
 # edit the locale file if needed
 if [ -n "$LOCALE_OVERRIDE" ]; then
     echo "Adding locale to the first line of pandas/__init__.py"
@@ -153,9 +153,11 @@ python setup.py build_ext -q -i
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
+whoami
 sudo python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
+whoami
 pip install numpy
 sudo python3.7 -m pip install --no-build-isolation -e .
 
