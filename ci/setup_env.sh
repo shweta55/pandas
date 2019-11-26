@@ -50,8 +50,9 @@ if [ "$UNAME_ARCH" == 'aarch64' ]; then
    sudo apt-get install python-dev
    sudo apt-get install python3-pip
    sudo apt-get install libpython3.7-dev
-    echo "/usr/local/bin/: "
-    sudo ls /usr/local/bin/
+   sudo apt-get install xvfb
+   echo "/usr/local/bin/: "
+   sudo ls /usr/local/bin/
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
    ./archiconda.sh -b
    echo "chmod MINICONDA_DIR"
@@ -160,6 +161,7 @@ echo "[Install pandas]"
 sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
 sudo python3.7 -m pip install numpy
 sudo python3.7 -m pip install --no-build-isolation -e .
+sudo chmod -R 777 $MINICONDA_DIR
 
 echo
 echo "conda list"
@@ -169,6 +171,7 @@ conda list
 if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
   echo "installing dbs"
   sudo systemctl start mysql
+  sudo service postgresql start
   mysql -e 'create database pandas_nosetest;'
   psql -c 'create database pandas_nosetest;' -U postgres
 else
