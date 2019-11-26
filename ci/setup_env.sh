@@ -1,5 +1,6 @@
 #!/bin/bash -e
-whoami
+
+sudo systemctl start mysql
 # edit the locale file if needed
 if [ -n "$LOCALE_OVERRIDE" ]; then
     echo "Adding locale to the first line of pandas/__init__.py"
@@ -153,12 +154,11 @@ python setup.py build_ext -q -i
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
-whoami
 sudo python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
-whoami
-pip install numpy
+sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
+sudo python3.7 -m pip install numpy
 sudo python3.7 -m pip install --no-build-isolation -e .
 
 echo
@@ -168,6 +168,7 @@ conda list
 # Install DB for Linux
 if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
   echo "installing dbs"
+  sudo systemctl start mysql
   mysql -e 'create database pandas_nosetest;'
   psql -c 'create database pandas_nosetest;' -U postgres
 else
