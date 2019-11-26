@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-sudo systemctl start mysql
 # edit the locale file if needed
 if [ -n "$LOCALE_OVERRIDE" ]; then
     echo "Adding locale to the first line of pandas/__init__.py"
@@ -51,8 +50,8 @@ if [ "$UNAME_ARCH" == 'aarch64' ]; then
    sudo apt-get install python3-pip
    sudo apt-get install libpython3.7-dev
    sudo apt-get install xvfb
-   echo "/usr/local/bin/: "
-   sudo ls /usr/local/bin/
+    echo "/usr/local/bin/: "
+    sudo ls /usr/local/bin/
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
    ./archiconda.sh -b
    echo "chmod MINICONDA_DIR"
@@ -160,6 +159,8 @@ sudo python3.7 -m pip install --no-deps -U pip wheel setuptools
 echo "[Install pandas]"
 sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
 sudo python3.7 -m pip install numpy
+sudo python3.7 -m pip install pytest-xvfb
+sudo python3.7 -m pip install hypothesis
 sudo python3.7 -m pip install --no-build-isolation -e .
 sudo chmod -R 777 $MINICONDA_DIR
 
@@ -168,14 +169,12 @@ echo "conda list"
 conda list
 
 # Install DB for Linux
-if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
-  echo "installing dbs"
-  sudo systemctl start mysql
-  sudo systemctl start postgresql
-  mysql -e 'create database pandas_nosetest;'
-  psql -c 'create database pandas_nosetest;' -U postgres
-else
-   echo "not using dbs on non-linux Travis builds or Azure Pipelines"
-fi
+#if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
+ # echo "installing dbs"
+ # mysql -e 'create database pandas_nosetest;'
+ # psql -c 'create database pandas_nosetest;' -U postgres
+#else
+ #  echo "not using dbs on non-linux Travis builds or Azure Pipelines"
+#fi
 
 echo "done"
