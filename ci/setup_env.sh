@@ -136,7 +136,7 @@ sudo python3.7 -m pip uninstall -y pandas || true
 echo
 echo "remove postgres if has been installed with conda"
 echo "we use the one from the CI"
-#sudo conda remove postgresql -y --force || true
+sudo conda remove postgresql -y --force || true
 
 echo
 echo "conda list pandas"
@@ -171,10 +171,10 @@ conda list
 # Install DB for Linux
 #if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
  # echo "installing dbs"
-  sudo systemctl start mysql
-  sudo service postgresql start 
-  mysql -e 'create database pandas_nosetest;'
-  psql -c 'create database pandas_nosetest;' -U postgres
+ # sudo systemctl start mysql
+ # sudo service postgresql start 
+ # mysql -e 'create database pandas_nosetest;'
+ # psql -c 'create database pandas_nosetest;' -U postgres
 #else
  #  echo "not using dbs on non-linux Travis builds or Azure Pipelines"
 #fi
