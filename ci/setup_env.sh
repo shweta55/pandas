@@ -156,7 +156,8 @@ echo "[Updating pip]"
 sudo python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
-python3.7 -m pip install --no-build-isolation -e .
+pip install numpy
+sudo python3.7 -m pip install --no-build-isolation -e .
 
 echo
 echo "conda list"
