@@ -1,18 +1,26 @@
 name: pandas-dev
 channels:
-- defaults
-- c3i_test
+  - defaults
+  - conda-forge
+  - c3i_test
 dependencies:
-- python=3.7.*
-- botocore>=1.11
-- cython>=0.29.13
-- numpy
-- python-dateutil
-- pytz
-# universal
-- pytest>=5.0.0
-- pytest-xdist>=1.29.0
-- pytest-mock
-- hypothesis>=3.58.0
-- pip
-- pip:
+  - python=3.7.*
+
+  # tools
+  - cython>=0.29.13
+  - pytest>=5.0.1
+  - pytest-xdist>=1.21
+  - hypothesis>=3.58.0
+
+  # pandas dependencies
+  - botocore>=1.11
+  - numpy
+  - python-dateutil
+  - nomkl
+  - pyarrow
+  - pytz
+  - s3fs
+  - pyreadstat
+  - pip
+  - pip:
+    - moto
