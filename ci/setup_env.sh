@@ -57,6 +57,7 @@ if [ `uname -m` = 'aarch64' ]; then
    $IS_SUDO chmod -R 777 $MINICONDA_DIR
    $IS_SUDO cp $MINICONDA_DIR/bin/* /usr/bin/
    $IS_SUDO rm /usr/bin/lsb_release
+   
 else
    wget -q "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh" -O miniconda.sh
    chmod +x miniconda.sh
@@ -162,10 +163,16 @@ $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
 echo "[Install pandas]"
 if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO chmod -R 777 $MINICONDA_DIR
-    $IS_SUDO python3.7 -m pip install numpy
-    $IS_SUDO python3.7 -m pip install pytest-xvfb
-    $IS_SUDO python3.7 -m pip install hypothesis
-    $IS_SUDO python3.7 -m pip install pytz
+    $IS_SUDO conda install numpy
+    $IS_SUDO conda install pytest-xvfb
+    $IS_SUDO conda pip install hypothesis
+    $IS_SUDO conda pip install pytz
+    $IS_SUDO conda pip install nomkl
+    #$IS_SUDO conda pip install pyarrow
+    $IS_SUDO conda pip install s3fs
+    #$IS_SUDO conda pip install boto3
+    $IS_SUDO conda pip install s3transfer[version='>=0.2.0,<0.3.0']
+    $IS_SUDO conda pip install pyreadstat    
     $IS_SUDO python3.7 -m pip install python-dateutil
     $IS_SUDO python3.7 -m pip install --no-build-isolation -e .
 else
