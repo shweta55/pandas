@@ -49,8 +49,6 @@ if [ `uname -m` = 'aarch64' ]; then
    $IS_SUDO apt-get install python3-pip
    $IS_SUDO apt-get install libpython3.7-dev
    $IS_SUDO apt-get install xvfb
-   echo "/usr/local/bin/: "
-   sudo ls /usr/local/bin/
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
    ./archiconda.sh -b
    echo "chmod MINICONDA_DIR"
