@@ -175,7 +175,11 @@ python setup.py build_ext -q -i
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
-$IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
+if [ `uname -m` = 'aarch64' ]; then
+    $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
+else
+    python -m pip install --no-deps -U pip wheel setuptools
+fi
 
 echo "[Install pandas]"
 if [ `uname -m` = 'aarch64' ]; then
