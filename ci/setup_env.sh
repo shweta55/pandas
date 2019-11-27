@@ -179,8 +179,9 @@ $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
 if [ `uname -m` = 'aarch64' ]; then
-    $IS_SUDO chmod -R 777 $MINICONDA_DIR
+    sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
     $IS_SUDO pip install --no-build-isolation -e .
+    sudo chmod -R 777 $MINICONDA_DIR
 else
     python -m pip install --no-build-isolation -e .
 fi    
