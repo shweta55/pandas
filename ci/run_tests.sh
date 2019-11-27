@@ -26,7 +26,7 @@ if [ "$COVERAGE" ]; then
 fi
 
 if [ `uname -m` = 'aarch64' ]; then
-    PYTEST_CMD="pytest -m auto -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"
+    PYTEST_CMD="pytest pandas"
 else
     PYTEST_CMD="pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"
 fi    
