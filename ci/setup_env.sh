@@ -119,7 +119,6 @@ if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO conda install python-dateutil    
     $IS_SUDO conda install hypothesis
     $IS_SUDO conda install pytz
-    $IS_SUDO conda install pip
     #$IS_SUDO conda install nomkl
     #$IS_SUDO conda install pyarrow
     #$IS_SUDO conda install s3fs
@@ -181,9 +180,11 @@ fi
 
 echo "[Install pandas]"
 if [ `uname -m` = 'aarch64' ]; then
-    sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
-    $IS_SUDO pip install --no-build-isolation -e .
-    sudo chmod -R 777 $MINICONDA_DIR
+    $IS_SUDO chmod -R 777 $MINICONDA_DIR
+    $IS_SUDO python3.7 -m pip install numpy
+    $IS_SUDO python3.7 -m pip install hypothesis
+    $IS_SUDO python3.7 -m pip install vispy
+    $IS_SUDO python3.7 -m pip install --no-build-isolation -e .
 else
     python -m pip install --no-build-isolation -e .
 fi    
