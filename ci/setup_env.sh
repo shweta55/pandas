@@ -13,10 +13,10 @@ if [ -n "$LOCALE_OVERRIDE" ]; then
 fi
 
 UNAME_ARCH=$(uname -m)
-IS_SUDO = ""
+IS_SUDO=""
 if [ "$UNAME_ARCH" == 'aarch64' ]; then
    MINICONDA_DIR="$HOME/archiconda3"
-   IS_SUDO = sudo
+   IS_SUDO="sudo"
 else
    MINICONDA_DIR="$HOME/miniconda3"
 fi
