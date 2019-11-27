@@ -14,7 +14,7 @@ fi
 
 IS_SUDO=""
 
-if [ "$UNAME_ARCH" == 'aarch64' ]; then
+if [ `uname -m` = 'aarch64' ]; then
    MINICONDA_DIR="$HOME/archiconda3"
    IS_SUDO="sudo"
 else
