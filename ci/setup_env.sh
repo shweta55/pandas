@@ -115,7 +115,6 @@ conda remove --all -q -y -n pandas-dev
 
 echo
 if [ `uname -m` = 'aarch64' ]; then
-    $IS_SUDO chmod -R 777 $MINICONDA_DIR
     $IS_SUDO conda install numpy
     $IS_SUDO conda install hypothesis
     $IS_SUDO conda install pytz
@@ -127,7 +126,6 @@ if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO conda install pyreadstat
     $IS_SUDO python3.7 -m pip install pytest-xvfb
     $IS_SUDO python3.7 -m pip install python-dateutil
-    $IS_SUDO chmod -R 777 $MINICONDA_DIR
 fi
 
 echo "conda env create -q --file=${ENV_FILE}"
@@ -177,7 +175,6 @@ $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
 if [ `uname -m` = 'aarch64' ]; then
-    $IS_SUDO chmod -R 777 $MINICONDA_DIR
     $IS_SUDO python3.7 -m pip install --no-build-isolation -e .
 else
     python -m pip install --no-build-isolation -e .
