@@ -12,8 +12,8 @@ if [ -n "$LOCALE_OVERRIDE" ]; then
     sudo locale-gen "$LOCALE_OVERRIDE"
 fi
 
-UNAME_ARCH=$(uname -m)
 IS_SUDO=""
+
 if [ "$UNAME_ARCH" == 'aarch64' ]; then
    MINICONDA_DIR="$HOME/archiconda3"
    IS_SUDO="sudo"
@@ -42,7 +42,7 @@ else
   exit 1
 fi
 
-if [ "$UNAME_ARCH" == 'aarch64' ]; then
+if [ `uname -m` = 'aarch64' ]; then
    wget -q "https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh" -O archiconda.sh
    chmod +x archiconda.sh
    $IS_SUDO apt-get install python-dev
@@ -130,7 +130,7 @@ echo
 echo "remove any installed pandas package"
 echo "w/o removing anything else"
 $IS_SUDO conda remove pandas -y --force || true
-if [ "$UNAME_ARCH" == 'aarch64' ]; then
+if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO python3.7 -m pip uninstall -y pandas || true
 else
     pip uninstall -y pandas || true
@@ -160,7 +160,7 @@ echo "[Updating pip]"
 $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
-if [ "$UNAME_ARCH" == 'aarch64' ]; then
+if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO chmod -R 777 $MINICONDA_DIR
     $IS_SUDO python3.7 -m pip install numpy
     $IS_SUDO python3.7 -m pip install pytest-xvfb
@@ -180,7 +180,7 @@ conda list
 # Install DB for Linux
 if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
   echo "installing dbs"
-  if [ "$UNAME_ARCH" == 'aarch64' ]; then  
+  if [ `uname -m` = 'aarch64' ]; then
     sudo systemctl start mysql
     #sudo service postgresql start
   else
