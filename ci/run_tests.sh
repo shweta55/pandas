@@ -25,20 +25,24 @@ if [ "$COVERAGE" ]; then
     COVERAGE="-s --cov=pandas --cov-report=xml:$COVERAGE_FNAME"
 fi
 
-if [ `uname -m` = 'aarch64' ]; then
-    PYTEST_CMD="pytest pandas"
-else
-    PYTEST_CMD="pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"
-fi    
+PYTEST_CMD="pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"  
 
 # Travis does not have have an X server
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     DISPLAY=DISPLAY=:99.0
-    PYTEST_CMD="xvfb-run -e /dev/stdout $PYTEST_CMD"
+    if [ `uname -m` = 'aarch64' ]; then
+        PYTEST_CMD="xvfb-run -e /dev/stdout pytest -m \"$PATTERN\" -n auto --dist=loadfile pandas"
+    else
+        PYTEST_CMD="xvfb-run -e /dev/stdout $PYTEST_CMD"
+    fi
 fi
 
 echo $PYTEST_CMD
-sh -c "$PYTEST_CMD"
+if [ `uname -m` = 'aarch64' ]; then
+    sudo sh -c "$PYTEST_CMD"
+else
+    sh -c "$PYTEST_CMD"
+fi
 
 if [[ "$COVERAGE" && $? == 0 && "$TRAVIS_BRANCH" == "master" ]]; then
     echo "uploading coverage"
