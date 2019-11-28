@@ -125,7 +125,6 @@ if [ `uname -m` = 'aarch64' ]; then
     #$IS_SUDO conda install boto3
     #$IS_SUDO conda install s3fs
     #$IS_SUDO conda install pyreadstat
-    $IS_SUDO python3.7 -m pip install pytest-xvfb
     $IS_SUDO chmod -R 777 $MINICONDA_DIR
 fi
 
@@ -173,7 +172,10 @@ python setup.py build_ext -q -i
 # - py36_32bit
 echo "[Updating pip]"
 if [ `uname -m` = 'aarch64' ]; then
+    sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
+    $IS_SUDO python3.7 -m pip install pytest-xvfb
     $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
+    sudo chmod -R 777 $MINICONDA_DIR
 else
     python -m pip install --no-deps -U pip wheel setuptools
 fi
@@ -183,7 +185,6 @@ if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO chmod -R 777 $MINICONDA_DIR
     $IS_SUDO python3.7 -m pip install numpy
     $IS_SUDO python3.7 -m pip install hypothesis
-    $IS_SUDO python3.7 -m pip install vispy
     $IS_SUDO python3.7 -m pip install --no-build-isolation -e .
 else
     python -m pip install --no-build-isolation -e .
