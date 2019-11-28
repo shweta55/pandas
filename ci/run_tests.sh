@@ -31,7 +31,7 @@ PYTEST_CMD="pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --duratio
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     DISPLAY=DISPLAY=:99.0
     if [ `uname -m` = 'aarch64' ]; then
-        PYTEST_CMD="xvfb-run -e /dev/stdout pytest -m \"$PATTERN\" -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"
+        PYTEST_CMD="xvfb-run -e /dev/stdout pytest -m \"$PATTERN\" -n -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"
     else
         PYTEST_CMD="xvfb-run -e /dev/stdout $PYTEST_CMD"
     fi
