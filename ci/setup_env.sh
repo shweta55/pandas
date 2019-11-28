@@ -173,7 +173,6 @@ python setup.py build_ext -q -i
 echo "[Updating pip]"
 if [ `uname -m` = 'aarch64' ]; then
     sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
-    $IS_SUDO python3.7 -m pip install pytest-xvfb
     $IS_SUDO python3.7 -m pip install pytest-forked
     $IS_SUDO python3.7 -m pip install pytest-xdist
     $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
