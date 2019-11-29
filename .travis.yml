@@ -106,6 +106,6 @@ script:
 
 after_script:
   - echo "after_script start"
-  - source activate pandas-dev && pushd /tmp && if [ `uname -m` = 'aarch64' ];then VAR="python3.7" ; else VAR="python" && $VAR -c "import pandas; pandas.show_versions();" && popd
+  - source activate pandas-dev && pushd /tmp && if [ `uname -m` = 'aarch64' ];then VAR="python3.7" ; else VAR="python";fi && $VAR -c "import pandas; pandas.show_versions();" && popd
   - ci/print_skipped.py 
   - echo "after_script done"
