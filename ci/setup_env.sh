@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+IS_SUDO=""
+ARCHICONDA_PYTHON="python3.7"
+
 # edit the locale file if needed
 if [ -n "$LOCALE_OVERRIDE" ]; then
     echo "Adding locale to the first line of pandas/__init__.py"
@@ -11,8 +14,6 @@ if [ -n "$LOCALE_OVERRIDE" ]; then
     echo
     sudo locale-gen "$LOCALE_OVERRIDE"
 fi
-
-IS_SUDO=""
 
 if [ `uname -m` = 'aarch64' ]; then
    MINICONDA_DIR="$HOME/archiconda3"
@@ -145,7 +146,7 @@ echo "remove any installed pandas package"
 echo "w/o removing anything else"
 $IS_SUDO conda remove pandas -y --force || true
 if [ `uname -m` = 'aarch64' ]; then
-    $IS_SUDO python3.7 -m pip uninstall -y pandas || true
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip uninstall -y pandas || true
 else
     pip uninstall -y pandas || true
 fi    
@@ -173,9 +174,9 @@ python setup.py build_ext -q -i
 echo "[Updating pip]"
 if [ `uname -m` = 'aarch64' ]; then
     sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
-    $IS_SUDO python3.7 -m pip install pytest-forked
-    $IS_SUDO python3.7 -m pip install pytest-xdist
-    $IS_SUDO python3.7 -m pip install --no-deps -U pip wheel setuptools
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-forked
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-xdist
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip install --no-deps -U pip wheel setuptools
     sudo chmod -R 777 $MINICONDA_DIR
 else
     python -m pip install --no-deps -U pip wheel setuptools
@@ -184,9 +185,9 @@ fi
 echo "[Install pandas]"
 if [ `uname -m` = 'aarch64' ]; then
     $IS_SUDO chmod -R 777 $MINICONDA_DIR
-    $IS_SUDO python3.7 -m pip install numpy
-    $IS_SUDO python3.7 -m pip install hypothesis
-    $IS_SUDO python3.7 -m pip install --no-build-isolation -e .
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip install numpy
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip install hypothesis
+    $IS_SUDO $ARCHICONDA_PYTHON -m pip install --no-build-isolation -e .
 else
     python -m pip install --no-build-isolation -e .
 fi    
