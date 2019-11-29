@@ -48,7 +48,7 @@ if [ `uname -m` = 'aarch64' ]; then
    chmod +x archiconda.sh
    $IS_SUDO apt-get install python-dev
    $IS_SUDO apt-get install python3-pip
-   $IS_SUDO apt-get install libpython3.7-dev
+   $IS_SUDO apt-get install lib$ARCHICONDA_PYTHON-dev
    $IS_SUDO apt-get install xvfb
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib:/usr/local/bin/python
    ./archiconda.sh -b
@@ -173,7 +173,7 @@ python setup.py build_ext -q -i
 # - py36_32bit
 echo "[Updating pip]"
 if [ `uname -m` = 'aarch64' ]; then
-    sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/python3.7/site-packages
+    sudo chmod -R 777 /home/travis/archiconda3/envs/pandas-dev/lib/$ARCHICONDA_PYTHON/site-packages
     $IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-forked
     $IS_SUDO $ARCHICONDA_PYTHON -m pip install pytest-xdist
     $IS_SUDO $ARCHICONDA_PYTHON -m pip install --no-deps -U pip wheel setuptools
