@@ -39,7 +39,7 @@ fi
 
 echo $PYTEST_CMD
 if [ `uname -m` = 'aarch64' ]; then
-    sh -c "$PYTEST_CMD"
+   sudo sh -c "$PYTEST_CMD"
 else
     sh -c "$PYTEST_CMD"
 fi
